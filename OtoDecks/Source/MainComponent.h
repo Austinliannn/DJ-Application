@@ -1,0 +1,62 @@
+#pragma once
+
+#include <JuceHeader.h>
+#include "DJAudioPlayer.h"
+#include "DeckGUI.h"
+#include "PlaylistComponent.h"
+
+
+//==============================================================================
+/*
+    This component lives inside our window, and this is where you should put all
+    your controls and content.
+*/
+class MainComponent  : public AudioAppComponent
+{
+public:
+
+    //==============================================================================
+    MainComponent();
+    ~MainComponent() override;
+
+    //==============================================================================
+    void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
+    void getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill) override;
+    void releaseResources() override;
+
+    //==============================================================================
+    void paint (juce::Graphics& g) override;
+    void resized() override;
+
+private:
+    //==============================================================================
+    // Your private member variables go here...
+
+//format manager to use
+    AudioFormatManager formatManager;
+    AudioSampleBuffer fileBuffer;
+    int position = 0;
+
+    float currentLevel = 0.0f, previousLevel = 0.0f;
+
+
+//storing up to 100 cached waveforms 
+    AudioThumbnailCache thumbCache{ 100 };
+
+//DJAudio Player
+    DJAudioPlayer player1{ formatManager };
+    DJAudioPlayer player2{ formatManager };
+    DJAudioPlayer parsingMetaData{ formatManager };
+
+//multiple DeckGUI
+    DeckGUI deckGUI1{&player1, formatManager, thumbCache};
+    DeckGUI deckGUI2{&player2, formatManager, thumbCache};
+
+//mixer audio source
+    MixerAudioSource mixerSource;
+
+//playlistcomponent 
+    PlaylistComponent playlistComponent{&parsingMetaData, &deckGUI1, &deckGUI2};
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+};
