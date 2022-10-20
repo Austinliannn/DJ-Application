@@ -9,9 +9,9 @@ This DJ application was built for users to mix song tracks by adding song tracks
 &nbsp; 3) Run debugger to view the game.
 
 <h1> Language/Framework: </h1>
-&nbsp; 1) C++
+&nbsp; 1) C++ <br/>
 &nbsp; 2) Object-Oriented Programming
 
 <h1>Demo of application being used:</h1> <br/>
 
-Uploading DJApplication.mp4…
+https://user-images.githubusercontent.com/75471463/196854937-355dacbd-56c1-4b50-afa1-9835b886b1da.mp4
